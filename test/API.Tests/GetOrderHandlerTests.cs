@@ -44,15 +44,15 @@ public class GetOrderHandlerTests
         // assert
         await Assert.ThrowsAsync<NotFoundException<OrderEntity, Id>>((Func<Task<GetOrderResponse>>) Action);
     }
-    
+
     [Fact]
     public async Task Get_Order_By_Id_Should_Return_The_Requested_Order()
     {
         // arrange
         const long orderId = 1L, productTypeId = 1L, productId = 1L;
-        const int quantity = 2, stackSize = 1;
-        const float productTypeWidth = 1.2F;
-        const string productName = "Candle";
+        const int quantity = 3, stackSize = 1;
+        const float productTypeWidth = 94.0F;
+        const string productName = "Mug";
         var now = DateTime.Now;
         var productType = new ProductTypeEntity
         {
@@ -81,7 +81,7 @@ public class GetOrderHandlerTests
             CreationDateTime = now,
             EntityState = TrackingState.Unchanged
         };
-        
+
         _orderRepository
             .Setup(repository => repository.Get2Async(orderId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(order);
@@ -89,8 +89,8 @@ public class GetOrderHandlerTests
 
         var request = new GetOrderRequest(Id: orderId);
         var expected = new GetOrderResponse(Id: orderId,
-            Products: new List<ProductResponse> {new(productId, productName, quantity)}, 1.2F * 2);
-        
+            Products: new List<ProductResponse> {new(productId, productName, quantity)}, productTypeWidth * quantity);
+
         var handler = new GetOrderHandler(_orderRepository.Object, _mockMapper);
 
         // act
@@ -101,4 +101,61 @@ public class GetOrderHandlerTests
         Assert.Equal(expected.RequiredBinWidth, actual.RequiredBinWidth);
     }
 
+    [Fact]
+    public async Task Get_Order_By_Id_Should_Return_Correct_Packaging_According_To_StackSize()
+    {
+        // arrange
+        const long orderId = 1L, productTypeId = 1L, productId = 1L;
+        const int quantity = 3, stackSize = 2;
+        // Line below calculates the items that could be in a package
+        var packageItemsCount = (int) Math.Ceiling((float) quantity / stackSize);
+        const float productTypeWidth = 94.0F;
+        const string productName = "Pen";
+        var now = DateTime.Now;
+        var productType = new ProductTypeEntity
+        {
+            Id = productTypeId,
+            Title = productName,
+            Width = productTypeWidth,
+            StackSize = stackSize,
+            EntityState = TrackingState.Unchanged
+        };
+        var products = new Collection<ProductEntity>
+        {
+            new()
+            {
+                Id = productId,
+                OrderId = orderId,
+                Quantity = quantity,
+                ProductTypeId = productTypeId,
+                ProductType = productType,
+                EntityState = TrackingState.Unchanged
+            }
+        };
+        var order = new OrderEntity
+        {
+            Id = orderId,
+            Products = products,
+            CreationDateTime = now,
+            EntityState = TrackingState.Unchanged
+        };
+
+        _orderRepository
+            .Setup(repository => repository.Get2Async(orderId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(order);
+
+
+        var request = new GetOrderRequest(Id: orderId);
+        var expected = new GetOrderResponse(Id: orderId,
+            Products: new List<ProductResponse> {new(productId, productName, quantity)},
+            productTypeWidth * packageItemsCount);
+
+        var handler = new GetOrderHandler(_orderRepository.Object, _mockMapper);
+
+        // act
+        var actual = await handler.Handle(request, default);
+
+        // assert
+        Assert.Equal(expected.RequiredBinWidth, actual.RequiredBinWidth);
+    }
 }

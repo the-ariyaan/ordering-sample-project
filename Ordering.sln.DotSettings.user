@@ -3,5 +3,6 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::5FF41CEB-8129-4204-A951-DA607B08F1D8::net6.0::API.Tests.GetOrderHandlerTests.Get_Order_By_Id_Should_Return_The_Requested_Order&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::5FF41CEB-8129-4204-A951-DA607B08F1D8::net6.0::API.Tests.GetOrderHandlerTests.Throw_Exception_If_The_Order_Id_Is_Not_Valid&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::5FF41CEB-8129-4204-A951-DA607B08F1D8::net6.0::API.Tests.GetOrderHandlerTests.Get_Order_By_Id_Should_Return_Correct_Packaging_According_To_StackSize&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
