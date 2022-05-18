@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Contracts\Repository" />
-      <Folder Include="Implementation\Repository" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
     </ItemGroup>
 
 </Project>

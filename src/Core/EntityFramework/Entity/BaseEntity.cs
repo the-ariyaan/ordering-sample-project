@@ -1,6 +1,4 @@
-using Core.Contracts.Entities;
-
-namespace Core.Implementation.Entities;
+namespace Core.EntityFramework.Entity;
 
 /// <summary>
 /// Base Entity for using entities with general properties including an Id of type long

@@ -6,6 +6,6 @@ public class ModuleInfo : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder)
     {
-        builder.ConfigureServices((config, services) => { });
+        builder.ConfigureServices((_, _) => { });
     }
 }

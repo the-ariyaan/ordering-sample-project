@@ -1,4 +1,4 @@
-namespace Core.Contracts.Entities;
+namespace Core.EntityFramework.Entity;
 
 /// <summary>
 /// Default Entity with an Id of type long
