@@ -24,7 +24,7 @@ public class CreateOrderHandler : IRequestHandler<CreateOrderRequest, CreateOrde
     public async Task<CreateOrderResponse> Handle(CreateOrderRequest request, CancellationToken cancellationToken)
     {
         var newOrder = _mapper.Map<OrderEntity>(request);
-        var addedOrder = await _orderRepository.CreatePAsync(newOrder, cancellationToken);
+        var addedOrder = await _orderRepository.CreateAsync(newOrder, cancellationToken);
         return _mapper.Map<CreateOrderResponse>(addedOrder);
     }
 }

@@ -26,7 +26,7 @@ public class GetOrderHandler : IRequestHandler<GetOrderRequest, GetOrderResponse
 
     public async Task<GetOrderResponse> Handle(GetOrderRequest request, CancellationToken cancellationToken)
     {
-        var orderEntity = await _orderRepository.Get2Async(request.Id, cancellationToken);
+        var orderEntity = await _orderRepository.GetAsync(request.Id, cancellationToken);
         if (orderEntity is null)
             throw new NotFoundException<OrderEntity, Id>(request.Id);
 

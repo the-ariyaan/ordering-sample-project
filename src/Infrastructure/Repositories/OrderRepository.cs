@@ -6,13 +6,15 @@ using Domain.ValueObjects;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
+namespace Infrastructure.Repositories;
+
 public class OrderRepository : EntityRepositoryBase<OrderEntity, OrderingDbContext>, IOrderRepository
 {
     public OrderRepository(OrderingDbContext dbContext) : base(dbContext)
     {
     }
 
-    public async Task<OrderEntity?> CreatePAsync(OrderEntity entity, CancellationToken cancellationToken)
+    public new async Task<OrderEntity?> CreateAsync(OrderEntity entity, CancellationToken cancellationToken)
     {
         //ToDo : Optimize this code (Minimize hitting to DB)
         foreach (var entityProduct in entity.Products)
@@ -26,7 +28,7 @@ public class OrderRepository : EntityRepositoryBase<OrderEntity, OrderingDbConte
         return entity;
     }
 
-    public async Task<OrderEntity> Get2Async(long id, CancellationToken cancellationToken)
+    public override async Task<OrderEntity?> GetAsync(long id, CancellationToken cancellationToken)
     {
         var order = await DbSet.Include(o => o.Products).ThenInclude(o => o.ProductType)
             .FirstOrDefaultAsync(p => p.Id.Equals(id), cancellationToken: cancellationToken);

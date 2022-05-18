@@ -41,13 +41,6 @@ public class EntityRepositoryBase<TEntity, TKey, TDbContext> : RepositoryBase<TE
         await SaveAsync(cancellationToken);
     }
 
-    public virtual async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
-    {
-        DbSet.Update(entity);
-        await SaveAsync(cancellationToken);
-        return entity;
-    }
-
     public async Task<int> SaveAsync(CancellationToken cancellationToken)
     {
         return await DbContext.SaveChangesAsync(cancellationToken);

@@ -5,8 +5,6 @@ namespace Core.Repository;
 public interface IEntityRepository<TEntity, TKey> : IRepositoryBase<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
 {
-    Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken);
-    Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
     Task RemoveAsync(TEntity entity, CancellationToken cancellationToken);
     Task<TEntity?> GetAsync(TKey id, CancellationToken cancellationToken);
     Task<int> SaveAsync(CancellationToken cancellationToken);

@@ -5,6 +5,6 @@ namespace Domain.Contracts.Repository;
 
 public interface IOrderRepository : IEntityRepository<OrderEntity>
 {
-    Task<OrderEntity?> CreatePAsync(OrderEntity entity, CancellationToken cancellationToken);
-    Task<OrderEntity> Get2Async(long requestId, CancellationToken cancellationToken);
+    Task<OrderEntity?> CreateAsync(OrderEntity entity, CancellationToken cancellationToken);
+    new Task<OrderEntity?> GetAsync(long requestId, CancellationToken cancellationToken);
 }

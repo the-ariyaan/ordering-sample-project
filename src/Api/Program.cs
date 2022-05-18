@@ -2,6 +2,7 @@ using Api;
 using AutoMapper;
 using Domain.Contracts.Repository;
 using Infrastructure.EntityFramework;
+using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

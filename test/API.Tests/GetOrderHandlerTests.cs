@@ -32,7 +32,7 @@ public class GetOrderHandlerTests
         const long orderId = 100L;
         OrderEntity order = null!;
         _orderRepository
-            .Setup(r => r.Get2Async(orderId, It.IsAny<CancellationToken>()))!
+            .Setup(r => r.GetAsync(orderId, It.IsAny<CancellationToken>()))!
             .ReturnsAsync(order);
 
         var request = new GetOrderRequest(orderId);
@@ -83,7 +83,7 @@ public class GetOrderHandlerTests
         };
 
         _orderRepository
-            .Setup(repository => repository.Get2Async(orderId, It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(orderId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(order);
 
 
@@ -141,7 +141,7 @@ public class GetOrderHandlerTests
         };
 
         _orderRepository
-            .Setup(repository => repository.Get2Async(orderId, It.IsAny<CancellationToken>()))
+            .Setup(repository => repository.GetAsync(orderId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(order);
 
 

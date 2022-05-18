@@ -17,18 +17,6 @@ public abstract class RepositoryBase<TEntity, TKey, TDbContext> : RepositoryBase
     {
     }
 
-    public virtual TValue? GetValue<TValue>(Expression<Func<TEntity, bool>>? predicate,
-        Expression<Func<TEntity, TValue>> selector)
-    {
-        return QueryNoTracking(predicate).Select(selector).FirstOrDefault();
-    }
-
-    public virtual Task<TValue?> GetValueAsync<TValue>(Expression<Func<TEntity, bool>>? predicate,
-        Expression<Func<TEntity, TValue>> selector)
-    {
-        return QueryNoTracking(predicate).Select(selector).FirstOrDefaultAsync();
-    }
-
     public virtual IQueryable<TEntity> QueryNoTracking(Expression<Func<TEntity, bool>>? predicate = null!,
         params Expression<Func<TEntity, object>>[]? includes)
     {
